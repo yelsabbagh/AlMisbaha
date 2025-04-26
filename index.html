@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المسبحة</title> <!-- Updated Title -->
+    <title>المسبحة</title>
 
     <!-- SEO Meta Tags -->
     <meta name="description" content="المسبحة - تطبيق مسبحة إلكترونية بسيط يساعدك على عدّ الأذكار والتسابيح بسهولة. يحفظ أعلى عدد لكل ذكر، ويعمل بدون انترنت عند تثبيته كتطبيق (PWA) على جهازك. صدقة جارية.">
-    <link rel="canonical" href="https://yelsabbagh.github.io/AlMisbahah/"> <!-- Canonical URL -->
+    <link rel="canonical" href="https://yelsabbagh.github.io/AlMisbahah/">
 
     <!-- Open Graph / Facebook / Social Media Meta Tags -->
     <meta property="og:title" content="المسبحة - عداد أذكار إلكتروني">
     <meta property="og:description" content="تطبيق بسيط ومجاني لعد الأذكار والتسابيح، يعمل بدون انترنت ويحفظ تقدمك.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://yelsabbagh.github.io/AlMisbahah/">
-    <meta property="og:image" content="https://yelsabbagh.github.io/AlMisbahah/icons/icon-512x512.png"> <!-- Make sure this icon exists -->
+    <meta property="og:image" content="https://yelsabbagh.github.io/AlMisbahah/icons/icon-512x512.png">
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
@@ -25,11 +25,12 @@
     <!-- iOS Specific Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="المسبحة"> <!-- Updated Apple App Title -->
-    <link rel="apple-touch-icon" href="icons/icon-192x192.png"> <!-- Adjust path if needed -->
-    
+    <meta name="apple-mobile-web-app-title" content="المسبحة">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+
+    <!-- Favicon for Browser Tab -->
     <link rel="icon" href="icons/icon-192x192.png" type="image/png">
-    
+
     <style>
         /* --- Basic Reset & Body --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -46,15 +47,7 @@
         }
 
         /* --- Top Share Bar --- */
-        #top-share-bar {
-            background-color: #e0e0e0;
-            padding: 8px 15px;
-            text-align: center;
-            width: 100%;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            z-index: 900;
-            /* position: sticky; top: 0; */ /* Uncomment for sticky bar */
-        }
+        #top-share-bar { background-color: #e0e0e0; padding: 8px 15px; text-align: center; width: 100%; box-shadow: 0 1px 3px rgba(0,0,0,0.1); z-index: 900; }
         .top-share-buttons { display: flex; justify-content: center; align-items: center; gap: 15px; }
         .top-share-buttons span { font-size: 0.9em; color: #555; margin-left: 10px; }
         .top-share-buttons a { display: inline-flex; align-items: center; text-decoration: none; transition: transform 0.2s ease, opacity 0.2s ease; }
@@ -62,38 +55,12 @@
         .top-share-buttons img { width: 28px; height: 28px; vertical-align: middle; }
         #copy-status-top { font-size: 0.8em; color: green; margin-right: 10px; min-height: 1em; min-width: 50px; display: inline-block; text-align: center; }
 
-        /* --- Reminder Area Below Top Bar --- */
-        #reminder-area {
-            text-align: center;
-            padding: 5px 15px 10px 15px;
-            background-color: #f0f0f0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        #enable-reminders-button {
-            /* display: none; /* JS manages visibility */
-            margin: 5px auto;
-            padding: 8px 15px;
-            font-size: 0.9em;
-            cursor: pointer;
-            background-color: #2a6f6f;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            transition: background-color 0.3s ease;
-        }
-        #enable-reminders-button:hover {
-             background-color: #1e5252;
-        }
-        #enable-reminders-button:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-        #reminder-status {
-            font-size: 0.85em;
-            color: #555;
-            min-height: 1em;
-            margin-top: 5px;
-        }
+        /* --- Reminder Area --- */
+        #reminder-area { text-align: center; padding: 5px 15px 10px 15px; background-color: #f0f0f0; border-bottom: 1px solid #e0e0e0; }
+        #enable-reminders-button { margin: 5px auto; padding: 8px 15px; font-size: 0.9em; cursor: pointer; background-color: #2a6f6f; color: white; border: none; border-radius: 6px; transition: background-color 0.3s ease; }
+        #enable-reminders-button:hover { background-color: #1e5252; }
+        #enable-reminders-button:disabled { opacity: 0.7; cursor: not-allowed; }
+        #reminder-status { font-size: 0.85em; color: #555; min-height: 1em; margin-top: 5px; }
 
         /* --- Main Container --- */
         .container { width: 95%; max-width: 1280px; margin: 20px auto; flex-grow: 1; display: flex; flex-direction: column; }
@@ -107,7 +74,7 @@
         #counter-display { margin-bottom: 20px; pointer-events: none; display: flex; flex-direction: column; align-items: center; }
         #counter-display .hits { font-size: 4em; font-weight: bold; color: #8b5a2b; display: block; }
         #counter-display .label { font-size: 1.1em; color: #666; }
-        .top-score { font-size: 1em; color: #666; margin-top: 10px; }
+        .top-score { font-size: 1em; color: #666; margin-top: 10px; } /* Label will be updated by JS */
         #reset-button { position: absolute; top: 15px; left: 15px; padding: 8px 15px; font-size: 0.9em; font-family: inherit; cursor: pointer; background-color: #8b5a2b; color: #f4f1ea; border: none; border-radius: 6px; transition: background-color 0.3s ease, transform 0.1s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.1); z-index: 10; }
         #reset-button:hover { background-color: #a06b3e; }
 
@@ -169,12 +136,10 @@
              #share-popup p { font-size: 0.9em; }
              .popup .share-buttons { gap: 15px; }
              .popup .share-buttons img { width: 35px; height: 35px; }
-             /* Responsive Reminder Area */
              #reminder-area { padding: 5px 10px 8px 10px; }
              #enable-reminders-button { font-size: 0.8em; padding: 6px 10px; }
              #reminder-status { font-size: 0.8em; }
         }
-
     </style>
 </head>
 <body>
@@ -182,30 +147,13 @@
     <!-- Permanent Top Share Bar -->
     <div id="top-share-bar">
         <div class="top-share-buttons">
-            <span>شارك التطبيق:</span>
-            <a href="#" id="whatsapp-share-top" aria-label="مشاركة عبر واتساب">
-                <img src="icons/whatsapp-icon.png" alt="WhatsApp">
-            </a>
-            <a href="#" id="telegram-share-top" aria-label="مشاركة عبر تيليجرام">
-                <img src="icons/telegram-icon.png" alt="Telegram">
-            </a>
-            <a href="#" id="copy-link-top" aria-label="نسخ الرابط والرسالة">
-                <img src="icons/copy-link-icon.png" alt="نسخ الرابط">
-            </a>
-            <span id="copy-status-top"></span>
+            <a href="#" id="whatsapp-share-top" aria-label="مشاركة عبر واتساب"><img src="icons/whatsapp-icon.png" alt="WhatsApp"></a>
+            <a href="#" id="telegram-share-top" aria-label="مشاركة عبر تيليجرام"><img src="icons/telegram-icon.png" alt="Telegram"></a>
+            <a href="#" id="copy-link-top" aria-label="نسخ الرابط والرسالة"><img src="icons/copy-link-icon.png" alt="نسخ الرابط"></a>
         </div>
     </div>
 
-    <!-- Reminder Button & Status -->
-    <div id="reminder-area">
-        <button id="enable-reminders-button" style="display: none;"> <!-- Initial display: none; JS will manage visibility -->
-            تفعيل تذكيرات الأذكار اليومية
-        </button>
-        <p id="reminder-status"></p>
-    </div>
-
     <div class="container">
-
         <!-- Counter Area -->
         <div id="counter-area" tabindex="0">
             <button id="reset-button">إعادة الضبط</button>
@@ -213,192 +161,185 @@
             <div id="counter-display">
                 <span class="hits">0</span>
                 <span class="label">مرات</span>
-                <div class="top-score">أعلى عدد: 0</div>
+                <div class="top-score">أعلى رصيد إجمالي: 0</div> <!-- Updated Label -->
             </div>
         </div>
-
-         <!-- Scroll Down Arrow -->
+        <!-- Scroll Down Arrow -->
         <div id="scroll-down-arrow">↓</div>
-
-        <!-- Dhikr Selection Grid (Cleaned up) -->
         <!-- Dhikr Selection Grid -->
-<div id="dhikr-selection">
+        <div id="dhikr-selection">
 
-    <!-- 1. (Previously Option 1) - Tahlil 100x: Immense comprehensive reward -->
-    <div class="dhikr-option" data-dhikr="لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير">
-        <span class="dhikr-text">لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير (100 مرة)</span>
-        <span class="dhikr-evidence">
-            قال رسول الله ﷺ:
-"...كانت له عدل عشر رقاب، وكُتبت له مائة حسنة، ومُحيت عنه مائة سيئة، وكانت له حرزًا من الشيطان يومه ذلك حتى يمسي، ولم يأت أحد بأفضل مما جاء به إلا أحد عمل أكثر من ذلك".
-"عشر مرات، كان كمن أعتق أربعة أنفس من ولد إسماعيل..."
-            <strong>(رواه البخاري ومسلم)</strong>
-        </span>
-    </div>
-
-    <!-- 2. (Previously Option 15) - Best Dhikr -->
-    <div class="dhikr-option" data-dhikr="لا إله إلا الله">
-        <span class="dhikr-text">لا إله إلا الله</span>
-        <span class="dhikr-evidence">
-            قال رسول الله ﷺ: "أفضل الذكر: لا إله إلا الله".
-            <strong>(رواه الترمذي وحسنه الألباني)</strong>
-        </span>
-    </div>
-
-    <!-- 3. (Previously Option 2) - Most Beloved Words -->
-    <div class="dhikr-option" data-dhikr="سبحان الله، والحمد لله، ولا إله إلا الله، والله أكبر">
-        <span class="dhikr-text">سبحان الله، والحمد لله، ولا إله إلا الله، والله أكبر</span>
-        <span class="dhikr-evidence">
-            قال النبي ﷺ: "أحب الكلام إلى الله أربع: سبحان الله، والحمد لله، ولا إله إلا الله، والله أكبر، لا يضرك بأيهن بدأت". وقال ﷺ: "...أحب إلي مما طلعت عليه الشمس".
-            <strong>(رواه مسلم)</strong>
-        </span>
-    </div>
-
-    <!-- 4. (Previously Option 5) - Heavy on Scales, Beloved to Ar-Rahman -->
-    <div class="dhikr-option" data-dhikr="سبحان الله وبحمده، سبحان الله العظيم">
-        <span class="dhikr-text">سبحان الله وبحمده، سبحان الله العظيم</span>
-        <span class="dhikr-evidence">
-            قال النبي ﷺ: "كلمتان خفيفتان على اللسان، ثقيلتان في الميزان، حبيبتان إلى الرحمن...".
-            <strong>(رواه البخاري ومسلم)</strong>
-        </span>
-    </div>
-
-    <!-- 5. (Previously Option 10) - Outweighs Prolonged Dhikr -->
-    <div class="dhikr-option" data-dhikr="سبحان الله وبحمده عدد خلقه ورضا نفسه وزنة عرشه ومداد كلماته">
-        <span class="dhikr-text"> (3 مرات) سبحان الله وبحمده عدد خلقه ورضا نفسه وزنة عرشه ومداد كلماته</span>
-        <span class="dhikr-evidence">
-             عن جويرية رضي الله عنها أن النبي ﷺ قال لها: "لقد قلتُ بعدك أربع كلمات، ثلاث مرات، لو وزنت بما قلتِ منذ اليوم لوزنتهن...".
-            <strong>(رواه مسلم)</strong>
-        </span>
-    </div>
-
-    <!-- 6. (Previously Option 8) - More & Better than Day/Night Dhikr -->
-    <div class="dhikr-option" data-dhikr="سبحان الله عدد ما خلق، سبحان الله ملء ما خلق، سبحان الله عدد ما في الأرض والسماء، سبحان الله ملء ما في الأرض والسماء، سبحان الله عدد ما أحصى كتابه، سبحان الله ملء ما أحصى كتابه، سبحان الله عدد كل شيء، سبحان الله ملء كل شيء، الحمد لله عدد ما خلق، الحمد لله ملء ما خلق، الحمد لله عدد ما في الأرض والسماء، الحمد لله ملء ما في الأرض والسماء، الحمد لله عدد ما أحصى كتابه، الحمد لله ملء ما أحصى كتابه، الحمد لله عدد كل شيء، الحمد لله ملء كل شيء">
-        <span class="dhikr-text">سبحان الله عدد ما خلق، سبحان الله ملء ما خلق، سبحان الله عدد ما في الأرض والسماء، سبحان الله ملء ما في الأرض والسماء، سبحان الله عدد ما أحصى كتابه، سبحان الله ملء ما أحصى كتابه، سبحان الله عدد كل شيء، سبحان الله ملء كل شيء، الحمد لله عدد ما خلق، الحمد لله ملء ما خلق، الحمد لله عدد ما في الأرض والسماء، الحمد لله ملء ما في الأرض والسماء، الحمد لله عدد ما أحصى كتابه، الحمد لله ملء ما أحصى كتابه، الحمد لله عدد كل شيء، الحمد لله ملء كل شيء</span>
-        <span class="dhikr-evidence">
-            قال رسول الله ﷺ لأبي أمامة: "ألا أخبرك بأكثر وأفضل من ذكرك بالليل والنهار؟..." .
-            <strong>(صححه الألباني في صحيح الترغيب: 1575)</strong>
-        </span>
-    </div>
-
-    <!-- 7. (Previously Option 6) - Treasure from Jannah -->
-    <div class="dhikr-option" data-dhikr="لا حول ولا قوة إلا بالله">
-        <span class="dhikr-text">لا حول ولا قوة إلا بالله</span>
-        <span class="dhikr-evidence">
-            قال ﷺ لأبي موسى الأشعري: "ألا أدلك على كنز من كنوز الجنة؟"...".
-            <strong>(رواه البخاري ومسلم)</strong>
-        </span>
-    </div>
-
-    <!-- 8. (Previously Option 4) - Salawat: 10 Blessings from Allah -->
-    <div class="dhikr-option" data-dhikr="اللهم صل على محمد وعلى آل محمد">
-        <span class="dhikr-text">اللهم صل على محمد وعلى آل محمد</span>
-        <span class="dhikr-evidence">
-            قال رسول الله ﷺ: "من صلى عليّ صلاة، صلى الله عليه بها عشرًا".
-            <strong>(رواه مسلم)</strong>. وقال ﷺ: "إن أولى الناس بي يوم القيامة أكثرهم عليّ صلاة". <strong>(حديث حسن)</strong>
-        </span>
-    </div>
-
-
-    <!-- 10. (Previously Option 14) - Plants a Palm Tree in Jannah -->
-    <div class="dhikr-option" data-dhikr="سبحان الله وبحمده"> <!-- Simplified data-dhikr to match text -->
-        <span class="dhikr-text">سبحان الله وبحمده</span>
-        <span class="dhikr-evidence">
-            قال النبي ﷺ: "... غرست له نخلة في الجنة".
-            <strong>(رواه الترمذي وصححه الألباني)</strong>
-        </span>
-    </div>
-
-     <!-- 11. (Previously Option 9) - Allah Obliges Himself to Please the Sayer -->
-    <div class="dhikr-option" data-dhikr="رضيت بالله ربًا، وبالإسلام دينًا، وبمحمدٍ ﷺ نبيًا">
-        <span class="dhikr-text">(3 مرات) رضيت بالله ربًا، وبالإسلام دينًا، وبمحمدٍ ﷺ نبيًا</span>
-        <span class="dhikr-evidence">
-            قال رسول الله ﷺ: "ما من عبد مسلم يقول حين يصبح وحين يمسي ثلاث مرات: رضيت بالله ربًا، وبالإسلام دينًا، وبمحمد صلى الله عليه وسلم نبيًا، إلا كان حقًا على الله أن يرضيه يوم القيامة".
-            <strong>(رواه أحمد وحسنه الألباني في صحيح الترغيب)</strong> <!-- Updated reference slightly for accuracy -->
-        </span>
-    </div>
-
-    <!-- 12. (Previously Option 13) - Removes Grief and Sadness -->
-    <div class="dhikr-option" data-dhikr="اللهم إني عبدك، ابن عبدك، ابن أمتك، ناصيتي بيدك، ماضٍ في حكمك، عدلٌ في قضاؤك، أسألك بكل اسم هو لك سميت به نفسك، أو علمته أحدًا من خلقك، أو أنزلته في كتابك، أو استأثرت به في علم الغيب عندك، أن تجعل القرآن ربيع قلبي، ونور صدري، وجلاء حزني، وذهاب همي"> <!-- Added full dua for completeness in data-dhikr -->
-        <span class="dhikr-text">اللهم إني عبدك، ابن عبدك، ابن أمتك، ناصيتي بيدك، ماضٍ في حكمك، عدلٌ في قضاؤك، أسألك بكل اسم هو لك سميت به نفسك، أو علمته أحدًا من خلقك، أو أنزلته في كتابك، أو استأثرت به في علم الغيب عندك، أن تجعل القرآن ربيع قلبي، ونور صدري، وجلاء حزني، وذهاب همي (دعاء الهم والحزن)</span> <!-- Shortened display text -->
-        <span class="dhikr-evidence">
-            قال النبي ﷺ: "ما أصاب أحداً قط هم ولا حزن فقال: ... إلا أذهب الله همه وحزنه، وأبدله مكانه فرجًا".
-            <strong>(رواه أحمد وصححه الألباني)</strong>
-        </span>
-    </div>
-
-    <!-- 13. (Previously Option 3) - Istighfar: Prophet's practice, brings relief/provision -->
-    <div class="dhikr-option" data-dhikr="أستغفر الله">
-        <span class="dhikr-text">أستغفر الله</span>
-        <span class="dhikr-evidence">
-            قال النبي ﷺ: "والله إني لأستغفر الله وأتوب إليه في اليوم أكثر من سبعين مرة".
-            <strong>(رواه البخاري)</strong>.
-            وقال ﷺ: "من لزم الاستغفار جعل الله له من كل هم فرجًا، ومن كل ضيق مخرجًا، ورزقه من حيث لا يحتسب".
-            <strong>(رواه أبو داود وابن ماجه)</strong>
-        </span>
-    </div>
-
-    <!-- 14. (Previously Option 12) - Dua for Distress (Karb) -->
-    <div class="dhikr-option" data-dhikr="لا إله إلا الله العظيم الحليم، لا إله إلا الله رب العرش العظيم، لا إله إلا الله رب السماوات ورب الأرض ورب العرش الكريم">
-        <span class="dhikr-text">لا إله إلا الله العظيم الحليم، لا إله إلا الله رب العرش العظيم، لا إله إلا الله رب السماوات  ورب الأرض ورب العرش الكريم (دعاء الكرب)</span>
-        <span class="dhikr-evidence">
-            أن رسول الله ﷺ كان يقول عند الكرب: "...".
-            <strong>(رواه البخاري ومسلم)</strong>
-        </span>
-    </div>
-
-    <!-- 15. (Previously Option 11) - Dua for Distress (Makroob) -->
-    <div class="dhikr-option" data-dhikr="اللهم رحمتك أرجو فلا تكلني إلى نفسي طرفة عين، وأصلح لي شأني كله، لا إله إلا أنت">
-        <span class="dhikr-text">اللهم رحمتك أرجو فلا تكلني إلى نفسي طرفة عين، وأصلح لي شأني كله، لا إله إلا أنت (دعاء الكرب)</span>
-        <span class="dhikr-evidence">
-            قال رسول الله ﷺ: "دعوات المكروب: ...".
-            <strong>(رواه أبو داود وحسنه الألباني)</strong> <!-- Corrected authenticity -->
-        </span>
-    </div>
-
-     <!-- 16. (Previously Option 7) - Statement of Trust (Tawakkul) -->
-    <div class="dhikr-option" data-dhikr="حسبنا الله ونعم الوكيل">
-        <span class="dhikr-text">حسبنا الله ونعم الوكيل</span>
-        <span class="dhikr-evidence">
-            ﴿الَّذِينَ قَالَ لَهُمُ النَّاسُ إِنَّ النَّاسَ قَدْ جَمَعُوا لَكُمْ فَاخْشَوْهُمْ فَزَادَهُمْ إِيمَانًا وَقَالُوا حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ * فَانقَلَبُوا بِنِعْمَةٍ مِّنَ اللَّهِ وَفَضْلٍ لَّمْ يَمْسَسْهُمْ سُوءٌ وَاتَّبَعُوا رِضْوَانَ اللَّهِ...﴾. وقالها إبراهيم عليه السلام حين ألقي في النار.
-            <strong>(آل عمران: 173-174، ورواه البخاري عن ابن عباس)</strong> <!-- Added context -->
-        </span>
-    </div>
-
-</div> <!-- End Dhikr Selection -->
+            <!-- 1. (Previously Option 1) - Tahlil 100x: Immense comprehensive reward -->
+            <div class="dhikr-option" data-dhikr="لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير">
+                <span class="dhikr-text">لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير (100 مرة)</span>
+                <span class="dhikr-evidence">
+                    قال رسول الله ﷺ:
+        "...كانت له عدل عشر رقاب، وكُتبت له مائة حسنة، ومُحيت عنه مائة سيئة، وكانت له حرزًا من الشيطان يومه ذلك حتى يمسي، ولم يأت أحد بأفضل مما جاء به إلا أحد عمل أكثر من ذلك".
+        "عشر مرات، كان كمن أعتق أربعة أنفس من ولد إسماعيل..."
+                    <strong>(رواه البخاري ومسلم)</strong>
+                </span>
+            </div>
+        
+            <!-- 2. (Previously Option 15) - Best Dhikr -->
+            <div class="dhikr-option" data-dhikr="لا إله إلا الله">
+                <span class="dhikr-text">لا إله إلا الله</span>
+                <span class="dhikr-evidence">
+                    قال رسول الله ﷺ: "أفضل الذكر: لا إله إلا الله".
+                    <strong>(رواه الترمذي وحسنه الألباني)</strong>
+                </span>
+            </div>
+        
+            <!-- 3. (Previously Option 2) - Most Beloved Words -->
+            <div class="dhikr-option" data-dhikr="سبحان الله، والحمد لله، ولا إله إلا الله، والله أكبر">
+                <span class="dhikr-text">سبحان الله، والحمد لله، ولا إله إلا الله، والله أكبر</span>
+                <span class="dhikr-evidence">
+                    قال النبي ﷺ: "أحب الكلام إلى الله أربع: سبحان الله، والحمد لله، ولا إله إلا الله، والله أكبر، لا يضرك بأيهن بدأت". وقال ﷺ: "...أحب إلي مما طلعت عليه الشمس".
+                    <strong>(رواه مسلم)</strong>
+                </span>
+            </div>
+        
+            <!-- 4. (Previously Option 5) - Heavy on Scales, Beloved to Ar-Rahman -->
+            <div class="dhikr-option" data-dhikr="سبحان الله وبحمده، سبحان الله العظيم">
+                <span class="dhikr-text">سبحان الله وبحمده، سبحان الله العظيم</span>
+                <span class="dhikr-evidence">
+                    قال النبي ﷺ: "كلمتان خفيفتان على اللسان، ثقيلتان في الميزان، حبيبتان إلى الرحمن...".
+                    <strong>(رواه البخاري ومسلم)</strong>
+                </span>
+            </div>
+        
+            <!-- 5. (Previously Option 10) - Outweighs Prolonged Dhikr -->
+            <div class="dhikr-option" data-dhikr="سبحان الله وبحمده عدد خلقه ورضا نفسه وزنة عرشه ومداد كلماته">
+                <span class="dhikr-text"> (3 مرات) سبحان الله وبحمده عدد خلقه ورضا نفسه وزنة عرشه ومداد كلماته</span>
+                <span class="dhikr-evidence">
+                     عن جويرية رضي الله عنها أن النبي ﷺ قال لها: "لقد قلتُ بعدك أربع كلمات، ثلاث مرات، لو وزنت بما قلتِ منذ اليوم لوزنتهن...".
+                    <strong>(رواه مسلم)</strong>
+                </span>
+            </div>
+        
+            <!-- 6. (Previously Option 8) - More & Better than Day/Night Dhikr -->
+            <div class="dhikr-option" data-dhikr="سبحان الله عدد ما خلق، سبحان الله ملء ما خلق، سبحان الله عدد ما في الأرض والسماء، سبحان الله ملء ما في الأرض والسماء، سبحان الله عدد ما أحصى كتابه، سبحان الله ملء ما أحصى كتابه، سبحان الله عدد كل شيء، سبحان الله ملء كل شيء، الحمد لله عدد ما خلق، الحمد لله ملء ما خلق، الحمد لله عدد ما في الأرض والسماء، الحمد لله ملء ما في الأرض والسماء، الحمد لله عدد ما أحصى كتابه، الحمد لله ملء ما أحصى كتابه، الحمد لله عدد كل شيء، الحمد لله ملء كل شيء">
+                <span class="dhikr-text">سبحان الله عدد ما خلق، سبحان الله ملء ما خلق، سبحان الله عدد ما في الأرض والسماء، سبحان الله ملء ما في الأرض والسماء، سبحان الله عدد ما أحصى كتابه، سبحان الله ملء ما أحصى كتابه، سبحان الله عدد كل شيء، سبحان الله ملء كل شيء، الحمد لله عدد ما خلق، الحمد لله ملء ما خلق، الحمد لله عدد ما في الأرض والسماء، الحمد لله ملء ما في الأرض والسماء، الحمد لله عدد ما أحصى كتابه، الحمد لله ملء ما أحصى كتابه، الحمد لله عدد كل شيء، الحمد لله ملء كل شيء</span>
+                <span class="dhikr-evidence">
+                    قال رسول الله ﷺ لأبي أمامة: "ألا أخبرك بأكثر وأفضل من ذكرك بالليل والنهار؟..." .
+                    <strong>(صححه الألباني في صحيح الترغيب: 1575)</strong>
+                </span>
+            </div>
+        
+            <!-- 7. (Previously Option 6) - Treasure from Jannah -->
+            <div class="dhikr-option" data-dhikr="لا حول ولا قوة إلا بالله">
+                <span class="dhikr-text">لا حول ولا قوة إلا بالله</span>
+                <span class="dhikr-evidence">
+                    قال ﷺ لأبي موسى الأشعري: "ألا أدلك على كنز من كنوز الجنة؟"...".
+                    <strong>(رواه البخاري ومسلم)</strong>
+                </span>
+            </div>
+        
+            <!-- 8. (Previously Option 4) - Salawat: 10 Blessings from Allah -->
+            <div class="dhikr-option" data-dhikr="اللهم صل على محمد وعلى آل محمد">
+                <span class="dhikr-text">اللهم صل على محمد وعلى آل محمد</span>
+                <span class="dhikr-evidence">
+                    قال رسول الله ﷺ: "من صلى عليّ صلاة، صلى الله عليه بها عشرًا".
+                    <strong>(رواه مسلم)</strong>. وقال ﷺ: "إن أولى الناس بي يوم القيامة أكثرهم عليّ صلاة". <strong>(حديث حسن)</strong>
+                </span>
+            </div>
+        
+        
+            <!-- 10. (Previously Option 14) - Plants a Palm Tree in Jannah -->
+            <div class="dhikr-option" data-dhikr="سبحان الله وبحمده"> <!-- Simplified data-dhikr to match text -->
+                <span class="dhikr-text">سبحان الله وبحمده</span>
+                <span class="dhikr-evidence">
+                    قال النبي ﷺ: "... غرست له نخلة في الجنة".
+                    <strong>(رواه الترمذي وصححه الألباني)</strong>
+                </span>
+            </div>
+        
+             <!-- 11. (Previously Option 9) - Allah Obliges Himself to Please the Sayer -->
+            <div class="dhikr-option" data-dhikr="رضيت بالله ربًا، وبالإسلام دينًا، وبمحمدٍ ﷺ نبيًا">
+                <span class="dhikr-text">(3 مرات) رضيت بالله ربًا، وبالإسلام دينًا، وبمحمدٍ ﷺ نبيًا</span>
+                <span class="dhikr-evidence">
+                    قال رسول الله ﷺ: "ما من عبد مسلم يقول حين يصبح وحين يمسي ثلاث مرات: رضيت بالله ربًا، وبالإسلام دينًا، وبمحمد صلى الله عليه وسلم نبيًا، إلا كان حقًا على الله أن يرضيه يوم القيامة".
+                    <strong>(رواه أحمد وحسنه الألباني في صحيح الترغيب)</strong> <!-- Updated reference slightly for accuracy -->
+                </span>
+            </div>
+        
+            <!-- 12. (Previously Option 13) - Removes Grief and Sadness -->
+            <div class="dhikr-option" data-dhikr="اللهم إني عبدك، ابن عبدك، ابن أمتك، ناصيتي بيدك، ماضٍ في حكمك، عدلٌ في قضاؤك، أسألك بكل اسم هو لك سميت به نفسك، أو علمته أحدًا من خلقك، أو أنزلته في كتابك، أو استأثرت به في علم الغيب عندك، أن تجعل القرآن ربيع قلبي، ونور صدري، وجلاء حزني، وذهاب همي"> <!-- Added full dua for completeness in data-dhikr -->
+                <span class="dhikr-text">اللهم إني عبدك، ابن عبدك، ابن أمتك، ناصيتي بيدك، ماضٍ في حكمك، عدلٌ في قضاؤك، أسألك بكل اسم هو لك سميت به نفسك، أو علمته أحدًا من خلقك، أو أنزلته في كتابك، أو استأثرت به في علم الغيب عندك، أن تجعل القرآن ربيع قلبي، ونور صدري، وجلاء حزني، وذهاب همي (دعاء الهم والحزن)</span> <!-- Shortened display text -->
+                <span class="dhikr-evidence">
+                    قال النبي ﷺ: "ما أصاب أحداً قط هم ولا حزن فقال: ... إلا أذهب الله همه وحزنه، وأبدله مكانه فرجًا".
+                    <strong>(رواه أحمد وصححه الألباني)</strong>
+                </span>
+            </div>
+        
+            <!-- 13. (Previously Option 3) - Istighfar: Prophet's practice, brings relief/provision -->
+            <div class="dhikr-option" data-dhikr="أستغفر الله">
+                <span class="dhikr-text">أستغفر الله</span>
+                <span class="dhikr-evidence">
+                    قال النبي ﷺ: "والله إني لأستغفر الله وأتوب إليه في اليوم أكثر من سبعين مرة".
+                    <strong>(رواه البخاري)</strong>.
+                    وقال ﷺ: "من لزم الاستغفار جعل الله له من كل هم فرجًا، ومن كل ضيق مخرجًا، ورزقه من حيث لا يحتسب".
+                    <strong>(رواه أبو داود وابن ماجه)</strong>
+                </span>
+            </div>
+        
+            <!-- 14. (Previously Option 12) - Dua for Distress (Karb) -->
+            <div class="dhikr-option" data-dhikr="لا إله إلا الله العظيم الحليم، لا إله إلا الله رب العرش العظيم، لا إله إلا الله رب السماوات ورب الأرض ورب العرش الكريم">
+                <span class="dhikr-text">لا إله إلا الله العظيم الحليم، لا إله إلا الله رب العرش العظيم، لا إله إلا الله رب السماوات  ورب الأرض ورب العرش الكريم (دعاء الكرب)</span>
+                <span class="dhikr-evidence">
+                    أن رسول الله ﷺ كان يقول عند الكرب: "...".
+                    <strong>(رواه البخاري ومسلم)</strong>
+                </span>
+            </div>
+        
+            <!-- 15. (Previously Option 11) - Dua for Distress (Makroob) -->
+            <div class="dhikr-option" data-dhikr="اللهم رحمتك أرجو فلا تكلني إلى نفسي طرفة عين، وأصلح لي شأني كله، لا إله إلا أنت">
+                <span class="dhikr-text">اللهم رحمتك أرجو فلا تكلني إلى نفسي طرفة عين، وأصلح لي شأني كله، لا إله إلا أنت (دعاء الكرب)</span>
+                <span class="dhikr-evidence">
+                    قال رسول الله ﷺ: "دعوات المكروب: ...".
+                    <strong>(رواه أبو داود وحسنه الألباني)</strong> <!-- Corrected authenticity -->
+                </span>
+            </div>
+        
+             <!-- 16. (Previously Option 7) - Statement of Trust (Tawakkul) -->
+            <div class="dhikr-option" data-dhikr="حسبنا الله ونعم الوكيل">
+                <span class="dhikr-text">حسبنا الله ونعم الوكيل</span>
+                <span class="dhikr-evidence">
+                    ﴿الَّذِينَ قَالَ لَهُمُ النَّاسُ إِنَّ النَّاسَ قَدْ جَمَعُوا لَكُمْ فَاخْشَوْهُمْ فَزَادَهُمْ إِيمَانًا وَقَالُوا حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ * فَانقَلَبُوا بِنِعْمَةٍ مِّنَ اللَّهِ وَفَضْلٍ لَّمْ يَمْسَسْهُمْ سُوءٌ وَاتَّبَعُوا رِضْوَانَ اللَّهِ...﴾. وقالها إبراهيم عليه السلام حين ألقي في النار.
+                    <strong>(آل عمران: 173-174، ورواه البخاري عن ابن عباس)</strong> <!-- Added context -->
+                </span>
+            </div>
+        
+        </div> <!-- End Dhikr Selection -->
     </div> <!-- End Container -->
 
     <!-- Footer -->
-    <footer>
-        © المسبحة - صدقة جارية عن مطورها ووالديه
-    </footer>
+    <footer>© المسبحة - صدقة جارية عن مطورها ووالديه</footer>
 
     <!-- Share/Install Popup -->
     <div id="share-popup-overlay">
         <div id="share-popup">
             <button id="close-popup-button" aria-label="إغلاق">×</button>
             <h3>شارك الخير وانشر الأجر!</h3>
-            <p>
-                <strong>هل تعلم؟</strong> يمكنك تثبيت تطبيق <strong>المسبحة</strong> على جهازك لاستخدامه بسهولة حتى بدون اتصال بالإنترنت! ابحث عن خيار <strong>"إضافة إلى الشاشة الرئيسية"</strong> أو "Install App" في قائمة المتصفح (⋮ أو زر المشاركة).
-            </p>
+            <p><strong>هل تعلم؟</strong> يمكنك تثبيت تطبيق <strong>المسبحة</strong> على جهازك لاستخدامه بسهولة حتى بدون اتصال بالإنترنت! ابحث عن خيار <strong>"إضافة إلى الشاشة الرئيسية"</strong> أو "Install App" في قائمة المتصفح (⋮ أو زر المشاركة).</p>
             <div class="popup-section popup">
                 <p>قال رسول الله ﷺ: <strong>"الدال على الخير كفاعله"</strong> (رواه مسلم). ساهم في نشر هذا التطبيق ليكون لك أجر كل من يستخدمه بسببك، فتكون صدقة جارية لك بإذن الله.</p>
                 <p>اضغط لمشاركة الرابط مع رسالة دعوية:</p>
                 <div class="share-buttons">
                     <a href="#" id="whatsapp-share-popup" aria-label="مشاركة عبر واتساب"><img src="icons/whatsapp-icon.png" alt="WhatsApp"></a>
                     <a href="#" id="telegram-share-popup" aria-label="مشاركة عبر تيليجرام"><img src="icons/telegram-icon.png" alt="Telegram"></a>
-                     <a href="#" id="copy-link-popup" aria-label="نسخ الرابط والرسالة"><img src="icons/copy-link-icon.png" alt="نسخ الرابط"></a>
+                    <a href="#" id="copy-link-popup" aria-label="نسخ الرابط والرسالة"><img src="icons/copy-link-icon.png" alt="نسخ الرابط"></a>
                 </div>
                  <span id="copy-status-popup"></span>
             </div>
         </div>
     </div>
 
-
     <script>
         // --- Global Variables & Constants ---
-        let dhikrScores = {};
-        let selectedDhikrKey = null;
-        let selectedDhikrElement = null;
+        let dhikrScores = {}; // Stores { [dhikrKey]: { current: number } }
+        let selectedDhikrKey = null; // Key of the currently selected dhikr (from sessionStorage)
+        let selectedDhikrElement = null; // Reference to the selected DOM element
+        let highestEverCount = 0; // Stores the overall highest count achieved (from localStorage)
 
         // DOM Elements
         const hitsElement = document.querySelector("#counter-display .hits");
@@ -409,8 +350,6 @@
         const dhikrOptions = document.querySelectorAll(".dhikr-option");
         const dhikrSelectionArea = document.getElementById("dhikr-selection");
         const scrollDownArrow = document.getElementById("scroll-down-arrow");
-
-        // Popup Elements
         const sharePopupOverlay = document.getElementById('share-popup-overlay');
         const sharePopup = document.getElementById('share-popup');
         const closePopupButton = document.getElementById('close-popup-button');
@@ -418,77 +357,122 @@
         const telegramSharePopup = document.getElementById('telegram-share-popup');
         const copyLinkPopup = document.getElementById('copy-link-popup');
         const copyStatusPopup = document.getElementById('copy-status-popup');
-
-        // Top Bar Share Elements
         const whatsappShareTop = document.getElementById('whatsapp-share-top');
         const telegramShareTop = document.getElementById('telegram-share-top');
         const copyLinkTop = document.getElementById('copy-link-top');
         const copyStatusTop = document.getElementById('copy-status-top');
-
-        // Reminder Elements
         const enableRemindersButton = document.getElementById('enable-reminders-button');
         const reminderStatusElement = document.getElementById('reminder-status');
 
         // Storage Keys
-        const STORAGE_KEY_SCORES = 'AlMisbahahScores_v1'; // Use a unique key for scores
-        const STORAGE_KEY_LAST_DHIKR = 'AlMisbahahLastDhikr_Session'; // Use session storage for this
-        const STORAGE_KEY_POPUP_SHOWN = 'AlMisbahahPopupShown_Session'; // Use session storage
+        const STORAGE_KEY_SCORES = 'AlMisbahahScores_v2'; // Key for current counts object (localStorage) - Increment version if structure changes
+        const STORAGE_KEY_HIGHEST_COUNT = 'AlMisbahahHighestCount_v1'; // Key for the overall highest count (localStorage)
+        const STORAGE_KEY_LAST_DHIKR = 'AlMisbahahLastDhikr_Session'; // Key for last selected Dhikr (sessionStorage)
+        const STORAGE_KEY_POPUP_SHOWN = 'AlMisbahahPopupShown_Session'; // Key for popup state (sessionStorage)
 
         // Shared Data for Sharing
         const shareUrl = "https://yelsabbagh.github.io/AlMisbahah/";
-        const shareBaseText = `🌟 *المسبحة الإلكترونية* 🌟\n\nالسلام عليكم ورحمة الله وبركاته،\n\nيسرّنا أن نقدم لكم تطبيق *المسبحة الإلكترونية* البسيط والمفيد لمساعدتكم على تتبّع الأذكار اليومية.\n\n✨ *مميزات التطبيق:*\n- سهل الاستخدام.\n- يحفظ أعلى عدد تكرار لكل ذكر.\n- يمكن تثبيته على جهازك ("إضافة إلى الشاشة الرئيسية") واستخدامه *بدون إنترنت*!\n\nقال رسول الله ﷺ: "*الدَّالُّ على الخير كفاعله*" (رواه مسلم).\n\n👈 لا تنس مشاركة التطبيق مع من تحب، لتنال أجر الدلالة على الخير وتكون لك صدقة جارية بإذن الله.\n\n🔗 رابط التطبيق:\n${shareUrl}`;
+        const shareBaseText = `🌟 *المسبحة الإلكترونية* 🌟\n\nالسلام عليكم ورحمة الله وبركاته،\n\nيسرّنا أن نقدم لكم تطبيق *المسبحة الإلكترونية* البسيط والمفيد لمساعدتكم على تتبّع الأذكار اليومية.\n\n✨ *مميزات التطبيق:*\n- سهل الاستخدام.\n- يحفظ أعلى رصيد إجمالي للعد.\n- يمكن تثبيته على جهازك ("إضافة إلى الشاشة الرئيسية") واستخدامه *بدون إنترنت*!\n\nقال رسول الله ﷺ: "*الدَّالُّ على الخير كفاعله*" (رواه مسلم).\n\n👈 لا تنس مشاركة التطبيق مع من تحب، لتنال أجر الدلالة على الخير وتكون لك صدقة جارية بإذن الله.\n\n🔗 رابط التطبيق:\n${shareUrl}`;
         const encodedShareText = encodeURIComponent(shareBaseText);
 
 
         // --- Storage Handling ---
         function loadScores() {
-            // Load scores from localStorage (permanent)
+            // Load current counts for each dhikr from localStorage
             const savedScores = localStorage.getItem(STORAGE_KEY_SCORES);
-            if (savedScores) { try { dhikrScores = JSON.parse(savedScores); } catch (e) { console.error("Failed to parse scores:", e); dhikrScores = {}; } } else { dhikrScores = {}; }
+            if (savedScores) {
+                try {
+                    dhikrScores = JSON.parse(savedScores);
+                    // Ensure loaded scores have the expected structure (just 'current')
+                    Object.keys(dhikrScores).forEach(key => {
+                        if (typeof dhikrScores[key] !== 'object' || dhikrScores[key] === null || typeof dhikrScores[key].current !== 'number') {
+                             console.warn(`Invalid score structure for ${key}, resetting.`);
+                             dhikrScores[key] = { current: 0 };
+                        }
+                        // Remove any legacy 'top' properties if they exist
+                        if (dhikrScores[key].hasOwnProperty('top')) {
+                            delete dhikrScores[key].top;
+                        }
+                    });
+                } catch (e) {
+                    console.error("Failed to parse dhikrScores:", e);
+                    dhikrScores = {};
+                }
+            } else {
+                dhikrScores = {};
+            }
+
+            // Load the overall highest count ever achieved from localStorage
+            highestEverCount = parseInt(localStorage.getItem(STORAGE_KEY_HIGHEST_COUNT) || '0', 10);
+            if (isNaN(highestEverCount)) highestEverCount = 0; // Ensure it's a number
 
             // Load last selected Dhikr from sessionStorage (resets per session)
             selectedDhikrKey = sessionStorage.getItem(STORAGE_KEY_LAST_DHIKR);
          }
+
         function saveScores() {
              try {
-                // Save scores to localStorage (permanent)
+                // Save current counts object to localStorage
                 localStorage.setItem(STORAGE_KEY_SCORES, JSON.stringify(dhikrScores));
-                // Save last selected Dhikr to sessionStorage (resets per session)
+                // Save the overall highest count to localStorage
+                localStorage.setItem(STORAGE_KEY_HIGHEST_COUNT, highestEverCount.toString());
+                // Save last selected Dhikr to sessionStorage
                 sessionStorage.setItem(STORAGE_KEY_LAST_DHIKR, selectedDhikrKey || '');
              } catch (e) { console.error("Failed to save scores:", e); }
         }
 
         // --- Rendering ---
         function updateDisplay() {
-            const currentScore = selectedDhikrKey ? (dhikrScores[selectedDhikrKey]?.current || 0) : 0;
-            const topScore = selectedDhikrKey ? (dhikrScores[selectedDhikrKey]?.top || 0) : 0;
-            const dhikrTextToShow = selectedDhikrKey || 'اختر ذكراً للبدء';
-            hitsElement.textContent = currentScore;
-            topScoreElement.textContent = `أعلى عدد: ${topScore}`;
-            selectedDhikrDisplay.textContent = dhikrTextToShow;
-            resetButton.style.display = selectedDhikrKey ? '' : 'none';
+            // Get current count for the selected dhikr, default to 0 if none selected
+            const currentScore = selectedDhikrKey && dhikrScores[selectedDhikrKey] ? dhikrScores[selectedDhikrKey].current : 0;
+
+            if (hitsElement) hitsElement.textContent = currentScore;
+            if (topScoreElement) topScoreElement.textContent = `أعلى رصيد إجمالي: ${highestEverCount}`; // Display the overall highest count
+            if (selectedDhikrDisplay) selectedDhikrDisplay.textContent = selectedDhikrKey || 'اختر ذكراً للبدء';
+            if (resetButton) resetButton.style.display = selectedDhikrKey ? '' : 'none';
         }
 
         // --- Core Logic ---
         function selectDhikr(dhikrKey, dhikrElement) {
              if (typeof(Storage) === "undefined") { console.warn("Local/Session storage not available."); }
             if (selectedDhikrElement) { selectedDhikrElement.classList.remove('selected'); }
-            if (selectedDhikrKey === dhikrKey) { selectedDhikrKey = null; selectedDhikrElement = null; }
-            else { selectedDhikrKey = dhikrKey; selectedDhikrElement = dhikrElement; selectedDhikrElement.classList.add('selected'); if (!dhikrScores[selectedDhikrKey]) { dhikrScores[selectedDhikrKey] = { current: 0, top: 0 }; } window.scrollTo({ top: 0, behavior: 'smooth' }); }
-            // Reset current count to 0 when selecting a new Dhikr
-            if (selectedDhikrKey && dhikrScores[selectedDhikrKey]) { dhikrScores[selectedDhikrKey].current = 0; }
-            saveScores();
-            updateDisplay();
-        }
-        function incrementCount() {
-             if (!selectedDhikrKey) return;
-             if (!dhikrScores[selectedDhikrKey]) { dhikrScores[selectedDhikrKey] = { current: 0, top: 0 }; }
 
-            dhikrScores[selectedDhikrKey].current++;
-            if (dhikrScores[selectedDhikrKey].current > dhikrScores[selectedDhikrKey].top) {
-                dhikrScores[selectedDhikrKey].top = dhikrScores[selectedDhikrKey].current;
+            if (selectedDhikrKey === dhikrKey) {
+                // Deselect if clicking the same one again
+                selectedDhikrKey = null;
+                selectedDhikrElement = null;
+            } else {
+                // Select the new one
+                selectedDhikrKey = dhikrKey;
+                selectedDhikrElement = dhikrElement;
+                selectedDhikrElement.classList.add('selected');
+                // Ensure score object exists for this dhikr, initialize if not
+                if (!dhikrScores[selectedDhikrKey]) {
+                    dhikrScores[selectedDhikrKey] = { current: 0 };
+                }
+                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
-            saveScores();
+            // *** NO LONGER RESETTING current count here ***
+            saveScores(); // Save selection status (session) and potentially initialized score (local)
+            updateDisplay(); // Update the display to show the count for the selected dhikr
+        }
+
+        function incrementCount() {
+             if (!selectedDhikrKey) return; // Only count if a dhikr is selected
+             if (!dhikrScores[selectedDhikrKey]) {
+                 dhikrScores[selectedDhikrKey] = { current: 0 }; // Safety init
+             }
+
+            // Increment current count for the selected dhikr
+            dhikrScores[selectedDhikrKey].current++;
+
+            // Check if this new current count exceeds the overall highest count
+            if (dhikrScores[selectedDhikrKey].current > highestEverCount) {
+                highestEverCount = dhikrScores[selectedDhikrKey].current;
+                 console.log("New highest ever count:", highestEverCount);
+            }
+
+            saveScores(); // Save updated current count and potentially new highestEverCount
             updateDisplay();
 
             // --- VIBRATION ---
@@ -497,16 +481,21 @@
             }
             // --- END VIBRATION ---
         }
+
         function resetCurrentCount() {
             if (!selectedDhikrKey || !dhikrScores[selectedDhikrKey]) return;
+            // Only reset the current count for the selected dhikr
             dhikrScores[selectedDhikrKey].current = 0;
-            saveScores();
+            saveScores(); // Save the reset current count
             updateDisplay();
+            // Note: Does NOT reset highestEverCount
         }
+
         function scrollToDhikrSelection() { dhikrSelectionArea.scrollIntoView({ behavior: 'smooth' }); }
 
         // --- Popup Logic ---
         function showPopup() {
+            if (!sharePopupOverlay) return; // Safety check
             const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
             const popupShownSession = sessionStorage.getItem(STORAGE_KEY_POPUP_SHOWN);
             if (!isStandalone && !popupShownSession) {
@@ -521,7 +510,7 @@
         function shareViaWhatsapp() { const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareBaseText)}`; window.open(whatsappUrl, '_blank'); }
         function shareViaTelegram() { const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodedShareText}`; window.open(telegramUrl, '_blank'); }
         function copyShareLink(statusElement) {
-            if (!statusElement) return; // Safety check
+            if (!statusElement || !navigator.clipboard) return; // Safety check
              navigator.clipboard.writeText(shareBaseText)
                 .then(() => { statusElement.textContent = 'تم النسخ!'; setTimeout(() => { statusElement.textContent = ''; }, 2500); })
                 .catch(err => { console.error('Failed to copy text: ', err); statusElement.textContent = 'فشل النسخ!'; setTimeout(() => { statusElement.textContent = ''; }, 2500); });
@@ -545,9 +534,8 @@
                 }
                 console.log('Notification permission granted.');
 
-                const registration = await navigator.serviceWorker.ready; // Ensure SW is ready
+                const registration = await navigator.serviceWorker.ready;
 
-                // Check periodic sync permission after getting SW registration
                 const periodicSyncPermissionStatus = await registration.permissions.query({ name: 'periodic-background-sync' });
                 console.log('Periodic sync permission state:', periodicSyncPermissionStatus.state);
 
@@ -557,10 +545,7 @@
                     return false;
                 }
 
-                // Register the task
-                await registration.periodicSync.register('dhikr-reminder', {
-                    minInterval: 12 * 60 * 60 * 1000 // Reduced interval to ~12 hours for potentially better firing chance, adjust if needed
-                });
+                await registration.periodicSync.register('dhikr-reminder', { minInterval: 12 * 60 * 60 * 1000 });
                 console.log('Periodic background sync "dhikr-reminder" registered successfully!');
                 return true;
 
@@ -573,7 +558,7 @@
 
         async function checkPeriodicSyncStatus() {
              console.log('Checking periodic sync status...');
-             if (enableRemindersButton) enableRemindersButton.style.display = 'none'; // Hide initially
+             if (enableRemindersButton) enableRemindersButton.style.display = 'none';
              if (reminderStatusElement) reminderStatusElement.textContent = '';
 
              if (!('serviceWorker' in navigator && 'PeriodicSyncManager' in window)) {
@@ -589,26 +574,22 @@
                  if (tags.includes('dhikr-reminder')) {
                      console.log('Periodic sync "dhikr-reminder" is registered.');
                      if (reminderStatusElement) reminderStatusElement.textContent = 'تذكيرات الأذكار اليومية مفعلة.';
-                     if (enableRemindersButton) enableRemindersButton.style.display = 'none'; // Hide button if already registered
+                     if (enableRemindersButton) enableRemindersButton.style.display = 'none';
                  } else {
                      console.log('Periodic sync "dhikr-reminder" is not registered.');
-                     // Check notification permission state non-interactively
                      const notificationPermissionStatus = await navigator.permissions.query({ name: 'notifications' });
                      console.log('Notification permission state:', notificationPermissionStatus.state);
 
                      if (notificationPermissionStatus.state === 'denied') {
                          if (reminderStatusElement) reminderStatusElement.textContent = 'تم حظر الإشعارات. يرجى السماح بها لتفعيل التذكيرات.';
-                     } else if (notificationPermissionStatus.state === 'prompt') {
-                          if (enableRemindersButton) enableRemindersButton.style.display = 'block'; // Show button if user needs to be prompted
-                     } else { // 'granted'
-                        // Now check periodic sync permission
+                     } else { // Granted or Prompt
                          try {
                              const periodicSyncPermissionStatus = await navigator.permissions.query({ name: 'periodic-background-sync' });
                              console.log('Periodic sync permission state:', periodicSyncPermissionStatus.state);
                              if (periodicSyncPermissionStatus.state === 'denied') {
                                  if (reminderStatusElement) reminderStatusElement.textContent = 'تم رفض إذن المزامنة الدورية. يرجى تفعيله من إعدادات المتصفح.';
                              } else { // granted or prompt
-                                 if (enableRemindersButton) enableRemindersButton.style.display = 'block'; // Show button
+                                 if (enableRemindersButton) enableRemindersButton.style.display = 'block';
                              }
                          } catch (permError) {
                               console.warn("Could not query periodic sync permission, showing button.", permError);
@@ -623,7 +604,7 @@
         }
 
         // --- Event Listeners ---
-        // Ensure all elements exist before adding listeners
+        // Add checks to ensure elements exist before adding listeners
         if (dhikrOptions) dhikrOptions.forEach(option => option.addEventListener('click', () => selectDhikr(option.dataset.dhikr, option)));
         if (counterArea) counterArea.addEventListener('click', (event) => { if (!event.target.closest('#reset-button')) incrementCount(); });
         if (resetButton) resetButton.addEventListener('click', (event) => { event.stopPropagation(); resetCurrentCount(); });
@@ -633,10 +614,7 @@
             const isTyping = activeElement && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA' || activeElement.isContentEditable);
             const isResetButtonFocused = activeElement === resetButton && (event.key === 'Enter' || event.key === ' ');
             const allowedKeys = ['Enter', ' ', 'Spacebar', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
-            if (!isTyping && !isResetButtonFocused && allowedKeys.includes(event.key)) {
-                incrementCount();
-                if (event.key.startsWith('Arrow')) { event.preventDefault(); }
-            }
+            if (!isTyping && !isResetButtonFocused && allowedKeys.includes(event.key)) { incrementCount(); if (event.key.startsWith('Arrow')) { event.preventDefault(); } }
         });
         if (closePopupButton) closePopupButton.addEventListener('click', hidePopup);
         if (sharePopupOverlay) sharePopupOverlay.addEventListener('click', (event) => { if (event.target === sharePopupOverlay) { hidePopup(); } });
@@ -653,23 +631,19 @@
                 enableRemindersButton.disabled = true;
                 enableRemindersButton.textContent = 'جارٍ التفعيل...';
                 if (reminderStatusElement) reminderStatusElement.textContent = '';
-
-                const success = await registerPeriodicSync(); // Attempt registration
-
+                const success = await registerPeriodicSync();
                 if (success) {
-                    enableRemindersButton.style.display = 'none'; // Hide button on success
+                    enableRemindersButton.style.display = 'none';
                     if (reminderStatusElement) reminderStatusElement.textContent = 'تم تفعيل تذكيرات الأذكار اليومية بنجاح!';
                 } else {
-                    // Keep button visible if registration failed, status set by registerPeriodicSync
-                     enableRemindersButton.textContent = 'تفعيل تذكيرات الأذكار اليومية'; // Reset button text
+                     enableRemindersButton.textContent = 'تفعيل تذكيرات الأذكار اليومية';
                 }
-                enableRemindersButton.disabled = false; // Re-enable button
+                enableRemindersButton.disabled = false;
             });
         }
 
-
         // --- Initialization ---
-        loadScores(); // Load permanent scores and session's last dhikr
+        loadScores(); // Load permanent scores/highest count and session's last dhikr
         // Apply selection visually if a dhikr was loaded from session storage
         if (selectedDhikrKey) {
             const lastSelectedElement = document.querySelector(`.dhikr-option[data-dhikr="${selectedDhikrKey}"]`);
@@ -678,38 +652,33 @@
                 selectedDhikrElement.classList.add('selected');
                 // Ensure score object exists even if loaded from session
                 if (!dhikrScores[selectedDhikrKey]) {
-                    dhikrScores[selectedDhikrKey] = { current: 0, top: 0 };
+                    dhikrScores[selectedDhikrKey] = { current: 0 };
                     saveScores(); // Save the initialized score
                 }
             } else {
                  console.warn("Last selected Dhikr key from session not found in options.");
-                 selectedDhikrKey = null; // Clear invalid key
-                 saveScores(); // Update session storage
+                 selectedDhikrKey = null;
+                 sessionStorage.removeItem(STORAGE_KEY_LAST_DHIKR); // Clear invalid key from session storage
             }
         }
         updateDisplay(); // Update counters and selected dhikr text
 
         // --- Load Event: Service Worker Registration & UI Setup ---
         window.addEventListener('load', () => {
-            // Show welcome popup after delay
-            setTimeout(showPopup, 1500);
+            setTimeout(showPopup, 1500); // Show welcome popup
 
-            // Register Service Worker
              if ('serviceWorker' in navigator) {
-                 navigator.serviceWorker.register('/sw.js') // Assumes sw.js is in root
+                 navigator.serviceWorker.register('/sw.js')
                    .then(registration => {
                        console.log('SW registration successful, scope is:', registration.scope);
-                       // Check reminder status AFTER SW is ready
-                       checkPeriodicSyncStatus(); // <-- Check status here
+                       checkPeriodicSyncStatus(); // Check reminder status AFTER SW is ready
                     })
                    .catch(error => {
                        console.log('SW registration failed:', error);
-                       // If SW fails, periodic sync won't work
                        if(enableRemindersButton) enableRemindersButton.style.display = 'none';
                        if(reminderStatusElement) reminderStatusElement.textContent = '';
                    });
              } else {
-                 // SW not supported, hide reminder UI
                  console.log('Service workers not supported, hiding reminder UI.');
                  if(enableRemindersButton) enableRemindersButton.style.display = 'none';
                  if(reminderStatusElement) reminderStatusElement.textContent = '';
