@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+   <url>
+      <loc>https://yelsabbagh.github.io/AlMisbahah/</loc>
+      <lastmod>2025-04-26</lastmod> <!-- Optional: Update this date when you make major changes -->
+      <changefreq>yearly</changefreq> <!-- Suggests how often the page might change -->
+      <priority>1.0</priority> <!-- Highest priority as it's the main page -->
+   </url>
+   <!-- If you add other distinct pages later (like an 'about' page), add more <url> blocks here -->
+</urlset>
