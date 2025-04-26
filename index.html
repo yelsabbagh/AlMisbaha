@@ -74,8 +74,8 @@
         #counter-display { margin-bottom: 20px; pointer-events: none; display: flex; flex-direction: column; align-items: center; }
         #counter-display .hits { font-size: 4em; font-weight: bold; color: #8b5a2b; display: block; }
         #counter-display .label { font-size: 1.1em; color: #666; }
-        .top-score { font-size: 1em; color: #666; margin-top: 10px; } /* Label will be updated by JS */
-        #reset-button { position: absolute; top: 15px; right: 15px; padding: 8px 15px; font-size: 0.9em; font-family: inherit; cursor: pointer; background-color: #8b5a2b; color: #f4f1ea; border: none; border-radius: 6px; transition: background-color 0.3s ease, transform 0.1s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.1); z-index: 10; }
+        .top-score { font-size: 1em; color: #b8860b; margin-top: 10px; font-weight: bold; } /* Label will be updated by JS */
+        #reset-button { position: absolute; top: 15px; right: 15px; padding: 8px 15px; font-size: 0.9em; font-family: inherit; cursor: pointer; background-color: #8b5a2b; color: #f4f1ea; border: none; border-radius: 6px; transition: background-color 0.3s ease, transform 0.1s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.1); z-index: 10; font-weight: bold;}
         #reset-button:hover { background-color: #a06b3e; }
 
         /* --- Scroll Down Arrow --- */
@@ -162,7 +162,7 @@
             <div id="counter-display">
                 <span class="hits">0</span>
                 <span class="label">مرات</span>
-                <div class="top-score">أعلى رصيد إجمالي: 0</div> <!-- Updated Label -->
+                <div class="top-score">الرقم القياسي: 0</div> <!-- Updated Label -->
             </div>
         </div>
         <!-- Scroll Down Arrow -->
@@ -373,7 +373,7 @@
 
         // Shared Data for Sharing
         const shareUrl = "https://yelsabbagh.github.io/AlMisbahah/";
-        const shareBaseText = `🌟 *المسبحة الإلكترونية* 🌟\n\nالسلام عليكم ورحمة الله وبركاته،\n\nيسرّنا أن نقدم لكم تطبيق *المسبحة الإلكترونية* البسيط والمفيد لمساعدتكم على تتبّع الأذكار اليومية.\n\n✨ *مميزات التطبيق:*\n- سهل الاستخدام.\n- يحفظ أعلى رصيد إجمالي للعد.\n- يمكن تثبيته على جهازك ("إضافة إلى الشاشة الرئيسية") واستخدامه *بدون إنترنت*!\n\nقال رسول الله ﷺ: "*الدَّالُّ على الخير كفاعله*" (رواه مسلم).\n\n👈 لا تنس مشاركة التطبيق مع من تحب، لتنال أجر الدلالة على الخير وتكون لك صدقة جارية بإذن الله.\n\n🔗 رابط التطبيق:\n${shareUrl}`;
+        const shareBaseText = `🌟 *المسبحة الإلكترونية* 🌟\n\nالسلام عليكم ورحمة الله وبركاته،\n\nيسرّنا أن نقدم لكم تطبيق *المسبحة الإلكترونية* البسيط والمفيد لمساعدتكم على تتبّع الأذكار اليومية.\n\n✨ *مميزات التطبيق:*\n- سهل الاستخدام.\n- يحفظ الرقم القياسي للعد.\n- يمكن تثبيته على جهازك ("إضافة إلى الشاشة الرئيسية") واستخدامه *بدون إنترنت*!\n\nقال رسول الله ﷺ: "*الدَّالُّ على الخير كفاعله*" (رواه مسلم).\n\n👈 لا تنس مشاركة التطبيق مع من تحب، لتنال أجر الدلالة على الخير وتكون لك صدقة جارية بإذن الله.\n\n🔗 رابط التطبيق:\n${shareUrl}`;
         const encodedShareText = encodeURIComponent(shareBaseText);
 
 
@@ -428,7 +428,7 @@
             const currentScore = selectedDhikrKey && dhikrScores[selectedDhikrKey] ? dhikrScores[selectedDhikrKey].current : 0;
 
             if (hitsElement) hitsElement.textContent = currentScore;
-            if (topScoreElement) topScoreElement.textContent = `أعلى رصيد إجمالي: ${highestEverCount}`; // Display the overall highest count
+            if (topScoreElement) topScoreElement.textContent = `الرقم القياسي: ${highestEverCount}`; // Display the overall highest count
             if (selectedDhikrDisplay) selectedDhikrDisplay.textContent = selectedDhikrKey || 'اختر ذكراً للبدء';
             if (resetButton) resetButton.style.display = selectedDhikrKey ? '' : 'none';
         }
