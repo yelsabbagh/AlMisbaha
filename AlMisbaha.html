@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مسبحة الأذكار</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Theme Color for Browsers -->
+    <meta name="theme-color" content="#e8e8e8"/> <!-- Match background or prominent color -->
+
+    <!-- iOS Specific Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default"> <!-- Or 'black', 'black-translucent' -->
+    <meta name="apple-mobile-web-app-title" content="مسبحة الأذكار">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png"> <!-- Add a path to your icon -->
+    <!-- Add more apple-touch-icon sizes if needed -->
+
+    <style>
+        /* --- Basic Reset & Body --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+             scroll-behavior: smooth; /* Enable smooth scrolling */
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+            direction: rtl;
+            background-color: #f4f1ea; /* Off-white/Very Light Beige */
+            color: #4a4a4a; /* Dark Slate Grey Text */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+        }
+
+        /* --- Main Container --- */
+        .container {
+            width: 95%;
+            max-width: 1280px; /* Max width set */
+            margin: 20px auto;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Counter Area --- */
+        #counter-area {
+            background-color: #e8e8e8; /* Light Grey */
+            padding: 25px 20px;
+            min-height: 85vh; /* Make it taller */
+            border-radius: 12px;
+            text-align: center;
+            /* margin-bottom: 30px; Removed bottom margin, replaced by arrow margin */
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            position: relative;
+            border: 1px solid #dcdcdc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; /* Vertically center content */
+            cursor: pointer; /* Make the whole area seem clickable */
+            transition: transform 0.1s ease;
+            user-select: none; /* Prevent text selection */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            outline: none; /* Remove focus outline when clicked */
+        }
+
+        /* Apply active state only if the click wasn't on a button inside */
+        #counter-area:active:not(:has(#reset-button:active)) {
+             transform: scale(0.99);
+        }
+
+        /* Prevent active state when clicking the reset button itself */
+        #counter-area:has(#reset-button:active) {
+            transform: none;
+            cursor: default;
+        }
+        #reset-button:active {
+            transform: scale(0.98);
+        }
+
+
+        #selected-dhikr {
+            font-size: 1.8em;
+            color: #2a6f6f; /* Muted Teal/Green */
+            margin-bottom: 15px;
+            min-height: 1.5em;
+            font-weight: bold;
+            width: 90%;
+            pointer-events: none; /* Clicks pass through text */
+        }
+
+        #counter-display {
+             margin-bottom: 20px;
+             pointer-events: none; /* Clicks pass through display */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #counter-display .hits {
+            font-size: 4em;
+            font-weight: bold;
+            color: #8b5a2b; /* Muted Brown */
+            display: block;
+        }
+
+        #counter-display .label {
+            font-size: 1.1em;
+            color: #666;
+        }
+
+        .top-score {
+            font-size: 1em;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        /* --- Buttons Styling --- */
+        #reset-button {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 8px 15px;
+            font-size: 0.9em;
+            font-family: inherit;
+            cursor: pointer;
+            background-color: #8b5a2b;
+            color: #f4f1ea;
+            border: none;
+            border-radius: 6px;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        #reset-button:hover {
+            background-color: #a06b3e;
+        }
+
+         /* Scroll Down Arrow (Moved outside counter-area) */
+        #scroll-down-arrow {
+            display: block; /* Make it take up its own space */
+            text-align: center; /* Center the arrow icon */
+            margin-top: 20px; /* Space below the counter area */
+            margin-bottom: 30px; /* Space above the selection grid */
+            font-size: 3em;
+            color: #2a6f6f;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.1s ease;
+            line-height: 1;
+            width: 100%; /* Allow text-align to center it */
+        }
+
+        #scroll-down-arrow:hover {
+            color: #1e5252;
+        }
+         #scroll-down-arrow:active {
+            transform: translateY(2px); /* Slight press effect */
+         }
+
+
+        /* --- Dhikr Selection Area --- */
+        #dhikr-selection {
+             /* Add a target padding-top so the scroll stops slightly above the elements */
+            padding-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .dhikr-option {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px 15px;
+            width: calc(25% - 15px);
+            min-width: 180px;
+            text-align: right;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            min-height: 150px;
+        }
+
+        .dhikr-text {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #2a6f6f;
+            margin-bottom: 10px;
+            flex-grow: 1;
+        }
+
+        .dhikr-evidence {
+            font-size: 0.75em;
+            color: #777;
+            line-height: 1.5;
+            border-top: 1px dashed #eee;
+            padding-top: 10px;
+            margin-top: auto;
+        }
+
+         .dhikr-evidence strong {
+            color: #555;
+            font-weight: normal;
+            display: block;
+            margin-top: 5px;
+        }
+
+
+        .dhikr-option:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .dhikr-option.selected {
+            background-color: #2a6f6f;
+            color: #ffffff;
+            border-color: #1e5252;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        }
+
+        .dhikr-option.selected .dhikr-text {
+            color: #ffffff;
+        }
+        .dhikr-option.selected .dhikr-evidence {
+            color: #e0f2f1;
+            border-top-color: #4a8a8a;
+        }
+        .dhikr-option.selected .dhikr-evidence strong {
+            color: #c0dfdf;
+        }
+
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 10px;
+            margin-top: auto;
+            font-size: 0.9em;
+            color: #888;
+            width: 100%;
+            background-color: #e8e8e8;
+            border-top: 1px solid #dcdcdc;
+            min-height: 1em;
+        }
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 1200px) {
+             .dhikr-option {
+                 width: calc(33.333% - 14px);
+             }
+        }
+
+        @media (max-width: 768px) {
+             .dhikr-option {
+                 width: calc(50% - 10px);
+             }
+             #selected-dhikr {
+                 font-size: 1.5em;
+             }
+             #counter-display .hits {
+                 font-size: 3.5em;
+             }
+             #scroll-down-arrow {
+                 font-size: 2.5em;
+                 margin-top: 15px;
+                 margin-bottom: 25px;
+             }
+        }
+
+        @media (max-width: 480px) {
+             .dhikr-option {
+                 width: calc(100% - 10px);
+             }
+             #reset-button {
+                 top: 10px;
+                 left: 10px;
+                 padding: 6px 10px;
+                 font-size: 0.8em;
+             }
+              #scroll-down-arrow {
+                 font-size: 2em;
+                 margin-top: 10px;
+                 margin-bottom: 20px;
+             }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Counter Area -->
+        <!-- Added tabindex="0" to make it focusable for keyboard events if needed, though body listener is used -->
+        <div id="counter-area" tabindex="0">
+            <button id="reset-button">إعادة الضبط</button>
+            <div id="selected-dhikr">اختر ذكراً للبدء</div>
+            <div id="counter-display">
+                <span class="hits">0</span>
+                <span class="label">مرات</span>
+                <div class="top-score">أعلى عدد: 0</div>
+            </div>
+            <!-- Arrow moved outside this div -->
+        </div>
+
+         <!-- Scroll Down Arrow (New Position) -->
+        <div id="scroll-down-arrow">↓</div>
+
+        <!-- Dhikr Selection Grid -->
+        <div id="dhikr-selection">
+
+            <!-- Option 1 -->
+            <div class="dhikr-option" data-dhikr="لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير">
+                <span class="dhikr-text">لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير</span>
+                <span class="dhikr-evidence">
+                    قال رسول الله ﷺ: "من قال: لا إله إلا الله وحده لا شريك له، له الملك وله الحمد، وهو على كل شيء قدير، في يوم مائة مرة، كانت له عدل عشر رقاب، وكُتبت له مائة حسنة، ومُحيت عنه مائة سيئة..."
+                    <strong>(رواه البخاري ومسلم)</strong>
+                </span>
+            </div>
+
+            <!-- Option 2 -->
+            <div class="dhikr-option" data-dhikr="سبحان الله، والحمد لله، ولا إله إلا الله، والله أكبر">
+                <span class="dhikr-text">سبحان الله، والحمد لله، ولا إله إلا الله، والله أكبر</span>
+                <span class="dhikr-evidence">
+                    قال النبي ﷺ: "أحب الكلام إلى الله أربع: سبحان الله، والحمد لله، ولا إله إلا الله، والله أكبر، لا يضرك بأيهن بدأت"
+                    <strong>(رواه مسلم)</strong>
+                </span>
+            </div>
+
+            <!-- Option 3 -->
+            <div class="dhikr-option" data-dhikr="أستغفر الله">
+                <span class="dhikr-text">أستغفر الله</span>
+                <span class="dhikr-evidence">
+                    قال النبي ﷺ: "والله إني لأستغفر الله وأتوب إليه في اليوم أكثر من سبعين مرة" <strong>(رواه البخاري)</strong>. وقال ﷺ: "من لزم الاستغفار جعل الله له من كل هم فرجا، ومن كل ضيق مخرجًا، ورزقه من حيث لا يحتسب" <strong>(رواه أبو داود وابن ماجه)</strong>
+                </span>
+            </div>
+
+            <!-- Option 4 -->
+            <div class="dhikr-option" data-dhikr="اللهم صل على محمد وعلى آل محمد">
+                <span class="dhikr-text">الصلاة على النبي ﷺ</span>
+                <span class="dhikr-evidence">
+                    قال رسول الله ﷺ: "من صلى عليّ صلاة، صلى الله عليه بها عشرًا" <strong>(رواه مسلم)</strong>. وقال: "إن أولى الناس بي يوم القيامة أكثرهم عليّ صلاة"
+                </span>
+            </div>
+
+            <!-- Option 5 -->
+            <div class="dhikr-option" data-dhikr="سبحان الله وبحمده، سبحان الله العظيم">
+                <span class="dhikr-text">سبحان الله وبحمده، سبحان الله العظيم</span>
+                <span class="dhikr-evidence">
+                    قال النبي ﷺ: "كلمتان خفيفتان على اللسان، ثقيلتان في الميزان، حبيبتان إلى الرحمن: سبحان الله وبحمده، سبحان الله العظيم"
+                    <strong>(رواه البخاري ومسلم)</strong>
+                </span>
+            </div>
+
+            <!-- Option 6 -->
+            <div class="dhikr-option" data-dhikr="لا حول ولا قوة إلا بالله">
+                <span class="dhikr-text">لا حول ولا قوة إلا بالله</span>
+                <span class="dhikr-evidence">
+                    قال ﷺ: "ألا أدلك على كنز من كنوز الجنة؟ لا حول ولا قوة إلا بالله"
+                    <strong>(رواه البخاري ومسلم)</strong>
+                </span>
+            </div>
+
+            <!-- Option 7 -->
+            <div class="dhikr-option" data-dhikr="حسبنا الله ونعم الوكيل">
+                <span class="dhikr-text">حسبنا الله ونعم الوكيل</span>
+                <span class="dhikr-evidence">
+                    قال الله تعالى: ﴿الَّذِينَ قَالَ لَهُمُ النَّاسُ إِنَّ النَّاسَ قَدْ جَمَعُوا لَكُمْ فَاخْشَوْهُمْ فَزَادَهُمْ إِيمَانًا وَقَالُوا حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ﴾
+                    <strong>(آل عمران: 173)</strong>
+                </span>
+            </div>
+
+            <!-- Option 8 -->
+            <div class="dhikr-option" data-dhikr="لا إله إلا الله وحده لا شريك له، له الملك وله الحمد، يحيي ويميت، وهو حي لا يموت، بيده الخير، وهو على كل شيء قدير (ذكر دخول السوق)">
+                <span class="dhikr-text">ذكر دخول السوق</span>
+                <span class="dhikr-evidence">
+                    "لا إله إلا الله وحده لا شريك له، له الملك وله الحمد، يحيي ويميت، وهو حي لا يموت، بيده الخير، وهو على كل شيء قدير". قال ﷺ: "من دخل السوق فقال هذا الذكر، كتب الله له ألف ألف حسنة..."
+                    <strong>(رواه الترمذي، حسن)</strong>
+                </span>
+            </div>
+
+            <!-- Option 9 -->
+            <div class="dhikr-option" data-dhikr="قراءة آية الكرسي">
+                <span class="dhikr-text">قراءة آية الكرسي</span>
+                <span class="dhikr-evidence">
+                    قال ﷺ: "من قرأ آية الكرسي دبر كل صلاة لم يمنعه من دخول الجنة إلا أن يموت"
+                    <strong>(رواه النسائي، صححه الألباني)</strong>
+                </span>
+            </div>
+
+             <!-- Option 10 -->
+            <div class="dhikr-option" data-dhikr="قراءة الإخلاص والمعوذتين (ثلاثًا)">
+                <span class="dhikr-text">الإخلاص، الفلق، الناس (ثلاثًا)</span>
+                <span class="dhikr-evidence">
+                    كان النبي ﷺ يقولها ثلاث مرات حين يصبح وحين يمسي، ويقول: "تكفيك من كل شيء"
+                     <strong>(رواه الترمذي، صححه الألباني)</strong>
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        © مسبحة الأذكار - صدقة جارية عن مطورها ووالديه
+    </footer>
+
+    <script>
+        // Use an object to store scores for each dhikr
+        let dhikrScores = {};
+        let selectedDhikrKey = null; // Stores the data-dhikr value of the selected item
+        let selectedDhikrElement = null; // Stores the selected element itself
+
+        // DOM Elements
+        const hitsElement = document.querySelector("#counter-display .hits");
+        const topScoreElement = document.querySelector(".top-score");
+        const selectedDhikrDisplay = document.getElementById("selected-dhikr");
+        const resetButton = document.getElementById("reset-button");
+        const counterArea = document.getElementById("counter-area");
+        const dhikrOptions = document.querySelectorAll(".dhikr-option");
+        const dhikrSelectionArea = document.getElementById("dhikr-selection");
+        const scrollDownArrow = document.getElementById("scroll-down-arrow");
+
+
+        // --- Local Storage Handling ---
+        const STORAGE_KEY_SCORES = 'dhikrM سبحةScores'; // Unique key for scores
+        const STORAGE_KEY_LAST_DHIKR = 'dhikrM سبحةLastDhikr'; // Key for last selected dhikr
+
+        function loadScores() {
+            const savedScores = localStorage.getItem(STORAGE_KEY_SCORES);
+            if (savedScores) {
+                try {
+                    dhikrScores = JSON.parse(savedScores);
+                } catch (e) {
+                    console.error("Failed to parse scores from localStorage:", e);
+                    dhikrScores = {}; // Reset if parsing fails
+                }
+            } else {
+                dhikrScores = {};
+            }
+
+            selectedDhikrKey = localStorage.getItem(STORAGE_KEY_LAST_DHIKR);
+        }
+
+        function saveScores() {
+            try {
+                localStorage.setItem(STORAGE_KEY_SCORES, JSON.stringify(dhikrScores));
+                localStorage.setItem(STORAGE_KEY_LAST_DHIKR, selectedDhikrKey || ''); // Save null as empty string
+            } catch (e) {
+                 console.error("Failed to save scores to localStorage:", e);
+                 // Handle potential quota exceeded error etc.
+            }
+        }
+
+        // --- Rendering ---
+        function updateDisplay() {
+            const currentScore = selectedDhikrKey ? (dhikrScores[selectedDhikrKey]?.current || 0) : 0;
+            const topScore = selectedDhikrKey ? (dhikrScores[selectedDhikrKey]?.top || 0) : 0;
+            const dhikrTextToShow = selectedDhikrKey || 'اختر ذكراً للبدء';
+
+            hitsElement.textContent = currentScore;
+            topScoreElement.textContent = `أعلى عدد: ${topScore}`;
+            selectedDhikrDisplay.textContent = dhikrTextToShow;
+
+             // Show/hide reset button based on selection
+            if (selectedDhikrKey) {
+                resetButton.style.display = ''; // Or 'block', 'inline-block'
+            } else {
+                 resetButton.style.display = 'none';
+            }
+        }
+
+        // --- Logic ---
+        function selectDhikr(dhikrKey, dhikrElement) {
+            // Check if localStorage is available before using it
+             if (typeof(Storage) === "undefined") {
+                 console.warn("Local storage is not available. Scores will not be saved.");
+             }
+
+            // Deselect previous if any
+            if (selectedDhikrElement) {
+                selectedDhikrElement.classList.remove('selected');
+            }
+
+            // If the same dhikr is clicked again, deselect it
+            if (selectedDhikrKey === dhikrKey) {
+                 selectedDhikrKey = null;
+                 selectedDhikrElement = null;
+            } else {
+                // Select the new one
+                selectedDhikrKey = dhikrKey;
+                selectedDhikrElement = dhikrElement;
+                selectedDhikrElement.classList.add('selected');
+
+                // Ensure score entry exists for this dhikr
+                if (!dhikrScores[selectedDhikrKey]) {
+                    dhikrScores[selectedDhikrKey] = { current: 0, top: 0 };
+                }
+
+                 // Scroll smoothly back to the top (counter area)
+                 window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            saveScores(); // Save the selected dhikr state and scores
+            updateDisplay(); // Update the display
+        }
+
+        function incrementCount() {
+            if (!selectedDhikrKey) {
+                // Maybe give feedback like a subtle shake?
+                // counterArea.style.animation = 'shake 0.3s';
+                // setTimeout(() => counterArea.style.animation = '', 300);
+                return;
+            }
+
+             if (!dhikrScores[selectedDhikrKey]) {
+                 dhikrScores[selectedDhikrKey] = { current: 0, top: 0 };
+             }
+
+            dhikrScores[selectedDhikrKey].current++;
+
+            if (dhikrScores[selectedDhikrKey].current > dhikrScores[selectedDhikrKey].top) {
+                dhikrScores[selectedDhikrKey].top = dhikrScores[selectedDhikrKey].current;
+            }
+
+            saveScores();
+            updateDisplay();
+        }
+
+        function resetCurrentCount() {
+            if (!selectedDhikrKey) return;
+
+            if (dhikrScores[selectedDhikrKey]) {
+                 dhikrScores[selectedDhikrKey].current = 0;
+                 saveScores();
+                 updateDisplay();
+            } else {
+                 dhikrScores[selectedDhikrKey] = { current: 0, top: 0 }; // Should not happen ideally
+                 saveScores();
+                 updateDisplay();
+            }
+        }
+
+        function scrollToDhikrSelection() {
+            dhikrSelectionArea.scrollIntoView({ behavior: 'smooth' });
+        }
+
+
+        // --- Initialization ---
+        loadScores(); // Load scores and last selected dhikr on page load
+
+        if (selectedDhikrKey) {
+            const lastSelectedElement = document.querySelector(`.dhikr-option[data-dhikr="${selectedDhikrKey}"]`);
+            if (lastSelectedElement) {
+                selectedDhikrElement = lastSelectedElement;
+                selectedDhikrElement.classList.add('selected');
+            } else {
+                selectedDhikrKey = null; // Clear if not found
+                 saveScores();
+            }
+        }
+
+        updateDisplay(); // Render the initial state
+
+
+        // --- Event Listeners ---
+
+        // Listener for clicking dhikr options
+        dhikrOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                selectDhikr(option.dataset.dhikr, option);
+            });
+        });
+
+        // Listener for clicking the counter area (main area)
+        counterArea.addEventListener('click', (event) => {
+            if (event.target.closest('#reset-button')) {
+                return; // Don't increment if reset button was clicked
+            }
+            incrementCount(); // Increment otherwise
+        });
+
+        // Listener for the reset button
+        resetButton.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent click from bubbling up
+            resetCurrentCount();
+        });
+
+        // Listener for the scroll down arrow
+        scrollDownArrow.addEventListener('click', (event) => {
+             event.stopPropagation();
+             scrollToDhikrSelection();
+        });
+
+
+        // Listener for specific keyboard key presses
+        document.body.addEventListener('keyup', (event) => {
+            // Ignore if modifier keys are pressed (except for potential future shortcuts)
+            // if (event.ctrlKey || event.altKey || event.metaKey) { // Allow Shift for potential future use?
+            //     return;
+            // }
+
+            // Check if the user is typing in an input/textarea or contenteditable element
+            const activeElement = document.activeElement;
+            const isTyping = activeElement && (
+                activeElement.tagName === 'INPUT' ||
+                activeElement.tagName === 'TEXTAREA' ||
+                activeElement.isContentEditable
+            );
+
+             // Check if the reset button is focused and Enter/Space is pressed (handled by button's default behavior or click listener)
+            const isResetButtonFocused = activeElement === resetButton && (event.key === 'Enter' || event.key === ' ');
+
+            // Define allowed keys for incrementing
+            const allowedKeys = [
+                'Enter',
+                ' ',        // Space bar (event.key is often ' ')
+                'Spacebar', // Space bar (older browsers/different event props might use 'Spacebar')
+                'ArrowUp',
+                'ArrowDown',
+                'ArrowLeft',
+                'ArrowRight'
+            ];
+
+            // Increment only if not typing, not activating reset button, and key is allowed
+            if (!isTyping && !isResetButtonFocused && allowedKeys.includes(event.key)) {
+                 console.log(`Incrementing via key: ${event.key}`); // Debug log
+                incrementCount();
+                // Optionally prevent default browser action for arrow keys if they cause scrolling
+                if (event.key.startsWith('Arrow')) {
+                    event.preventDefault();
+                }
+            } else {
+                 // Log ignored keys if needed for debugging, but don't increment
+                 // console.log(`Key press ignored (${event.key})`);
+            }
+        });
+
+        // --- PWA Service Worker Registration ---
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js') // Make sure sw.js is in the root directory
+              .then(registration => {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+              })
+              .catch(error => {
+                console.log('ServiceWorker registration failed: ', error);
+              });
+          });
+        }
+
+    </script>
+
+</body>
+</html>
